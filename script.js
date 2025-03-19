@@ -3,21 +3,17 @@ async function getVideos() {
     const jsonData = await response.json()
     return jsonData.data.data
 }
-
-function createVideoDiv(video) {
-    const gridBox = document.getElementById("gridBox")
+function getVideoDiv(video) {
     const vDiv = document.createElement("a")
-    const imgDiv = getThumbnail(video.snippet.thumbnails.medium.url)
+    const imgDiv = getThumbnail(video.snippet.thumbnails.high.url)
     const descDiv = getDescription(video.snippet.title , video.snippet.channelTitle , video.statistics.viewCount)
     vDiv.href = `https://www.youtube.com/watch?v=${video.id}`
     vDiv.target = "_blank"
     vDiv.appendChild(imgDiv)
     vDiv.appendChild(descDiv)
-    gridBox.appendChild(vDiv)
-    
-    console.log(video);
+    vDiv.id = video.snippet.title
+    return vDiv
 }
-
 
 function getThumbnail(url) {
     const imgDiv = document.createElement("img")
@@ -60,12 +56,38 @@ function getDescription(title , channelName , viewCount) {
     return descDiv
 }
 
+//getting videos and adding to the screen
+const gridBox = document.getElementById("gridBox")
+let divs = []
 getVideos()
 .then((d) => {
     d.forEach((video , i) => {
-        createVideoDiv(video.items)
+        let div = getVideoDiv(video.items)
+        
+        gridBox.appendChild(div)
+        divs.unshift(div)
     })
 })
 .catch((e) => {
-
+    console.log(e);
 })
+
+//filtering of videos based on input in search bar
+const searchBar = document.getElementById("search")
+searchBar.addEventListener("input",debounce((e) => {
+    e.preventDefault()
+    let title = e.target.value
+    const newDivs = divs.filter((d) => d.id.toLowerCase().includes(title)).reverse()
+    gridBox.innerHTML = "";
+    newDivs.forEach((d) => gridBox.appendChild(d));
+},500))
+
+//debounce funtion
+
+function debounce(fn , delay) {
+    let timer;
+    return function(...args) {
+        clearTimeout(timer)
+        timer = setTimeout(() => { fn.apply(this,args) },delay)
+    }
+}
