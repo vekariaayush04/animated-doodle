@@ -1,4 +1,4 @@
-# animated-doodle
+# youtube video listing
 
 This project aims to build a **YouTube-style video listing page** that fetches and displays YouTube videos from the FreeAPI YouTube endpoint. The page allows users to view video thumbnails, titles, and channel names, with the ability to click on a video to open it in YouTube. Additionally, it includes a search bar that filters the displayed videos based on the title, providing a user-friendly and dynamic experience.
 
