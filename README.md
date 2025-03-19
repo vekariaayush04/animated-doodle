@@ -41,12 +41,12 @@ The application fetches video data from the following API endpoint:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/vekariaayush04/vigilant-fortnight.git
+   git clone https://github.com/vekariaayush04/animated-doodle.git
    ```
 
 2. **Navigate to the project folder**:
    ```bash
-   cd vigilant-fortnight
+   cd animated-doodle
    ```
 
 3. **Open the `index.html` file** in a browser to view the application.
